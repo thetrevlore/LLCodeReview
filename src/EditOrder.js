@@ -5,6 +5,68 @@ import CustomerOrders from './CustomerOrders';
 import GlobalStyles from './styles';
 
 const TEST_ORDER_ID = 'f66f96c7-7b42-416c-8003-41fcb99dd1a1';
+const orders = [
+  {
+    status: 'shipped',
+    order: {
+      id: TEST_ORDER_ID,
+      currency: 'USD',
+      checkout_date: (new Date()).toISOString(),
+      ship_date: (new Date()).toISOString(),
+      charges: [
+        {
+          id: 1,
+          price: 1.01,
+          tax: 0.07,
+          shipping: 2.05,
+          refunds: [
+            {
+              amount: 0.05,
+            }
+          ],
+        }
+      ],
+    },
+    fulfillment: { id: 1 },
+    items: [
+      {
+        product_id: 'soccer-ball',
+        variant_id: 'size-4',
+        unit_price: 1.01,
+        unit_tax: 0.07,
+        quantity: 1,
+        ship_first_name: 'trevor',
+        ship_last_name: 'storey',
+        ship_line1: '866 Myrtle Ave',
+        ship_line2: '#3',
+        ship_country: 'US',
+        ship_city: 'Brooklyn',
+        ship_region: 'New York',
+        ship_postal: '11206',
+      }
+    ],
+    notes: [
+      {
+        ts: (new Date()).toISOString(),
+        representative: 'trevor',
+        text: 'test order note',
+        reason: 'Customer Request',
+        action: 'Update Quantity',
+        unit_price: 0,
+        unit_tax: 0,
+        charge_price: 0,
+        charge_tax: 0,
+        charge_shipping: 0,
+        charge_total: 0,
+        refund_amount: 1,
+      }
+    ],
+  },
+];
+const customer = {
+  id: 1,
+  email: 'trevorstorey23@gmail.com',
+};
 
 export default class EditOrder extends Component {
   constructor(props) {
@@ -77,10 +139,7 @@ export default class EditOrder extends Component {
       // const headersObj = { headers: { Authorization: `internal ${window.localStorage.getItem('session_token')}` } };
       // const customerResponse = await axios.get(`api/customer?email=${this.state.emailSearch}`, headersObj);
       // const customer = customerResponse.data;
-      const customer = {
-        id: 1,
-        email: 'trevorstorey23@gmail.com',
-      };
+
       await this.getCustomerOrders(customer.id);
       if (!this.props.representative) {
         const firstName = window.localStorage.getItem('representative');
@@ -99,67 +158,9 @@ export default class EditOrder extends Component {
       // const ordersResponse = await axios.get(`/api/customer_order/${customerId}`, headersObj);
       // const orders = ordersResponse.data;
 
-      const orders = [
-        {
-          status: 'shipped',
-          order: {
-            id: TEST_ORDER_ID,
-            currency: 'USD',
-            checkout_date: (new Date()).toISOString(),
-            ship_date: (new Date()).toISOString(),
-            charges: [
-              {
-                id: 1,
-                price: 1.01,
-                tax: 0.07,
-                shipping: 2.05,
-                refunds: [
-                  {
-                    amount: 0.05,
-                  }
-                ],
-              }
-            ],
-          },
-          fulfillment: { id: 1 },
-          items: [
-            {
-              product_id: 'soccer-ball',
-              variant_id: 'size-4',
-              unit_price: 1.01,
-              unit_tax: 0.07,
-              quantity: 1,
-              ship_first_name: 'trevor',
-              ship_last_name: 'storey',
-              ship_line1: '866 Myrtle Ave',
-              ship_line2: '#3',
-              ship_country: 'US',
-              ship_city: 'Brooklyn',
-              ship_region: 'New York',
-              ship_postal: '11206',
-            }
-          ],
-          notes: [
-            {
-              ts: (new Date()).toISOString(),
-              representative: 'trevor',
-              text: 'test order note',
-              reason: 'Customer Request',
-              unit_price: 0,
-              unit_tax: 0,
-              charge_price: 0,
-              charge_tax: 0,
-              charge_shipping: 0,
-              charge_total: 0,
-              refund_amount: 1,
-            }
-          ],
-        },
-      ]
-
       for (let i = 0; i < orders.length; i++) {
-        // orders[i].isEditable = !orders[i].fulfillment.id || orders[i].order.id === TEST_ORDER_ID;
-        orders[i].isEditable = !orders[i].fulfillment.id;
+        orders[i].isEditable = !orders[i].fulfillment.id || orders[i].order.id === TEST_ORDER_ID;
+        // orders[i].isEditable = !orders[i].fulfillment.id;
         orders[i].refundAmount = '';
         orders[i].chargeAmount = '';
         orders[i].shippingAddr = {
