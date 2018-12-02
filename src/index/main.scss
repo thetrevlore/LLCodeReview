@@ -1,0 +1,33 @@
+#index {
+  display: flex;
+  // border: 5px solid blue;
+  // height: 100vh;
+  flex-direction: row;
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    // align-items: flex-start;
+    justify-content: flex-start;
+    // height: 100vh;
+    width: 100vw;
+    // border: 5px solid magenta;
+  }
+
+  .main-and-order-summary {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    // border: 5px solid magenta;
+  }
+
+  .main--container {
+    display: flex;
+    flex-direction: row;
+    // height: 90vh;
+    width: 100%;
+    // flex: 1;
+    // border: 5px solid magenta;
+  }
+
+}

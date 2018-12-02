@@ -1,0 +1,16 @@
+version: '2'
+services:
+
+  node:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '8002:80'
+    command: node --use_strict /code/src/entrypoint
+
+networks:
+  default:
+    external:
+      name: nginx
